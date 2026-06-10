@@ -1,0 +1,25 @@
+{
+  "name": "personal-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "check": "astro check",
+    "verify": "astro check && vitest run && astro build"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource/silkscreen": "^5.2.8",
+    "astro": "^6.4.6",
+    "typescript": "^6.0.3",
+    "zod": "^4.4.3"
+  }
+}
