@@ -1,10 +1,15 @@
 ---
-import { getEntry } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import Base from "../layouts/Base.astro";
+import ProjectCard from "../components/ProjectCard.astro";
 
 const site = await getEntry("site", "main");
 if (!site) throw new Error("site content entry 'main' is missing");
 const { name, tagline, bio, ogDescription } = site.data;
+
+const projects = (await getCollection("projects")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
 <Base title={`${name} — Portfolio`} description={ogDescription}>
@@ -19,7 +24,13 @@ const { name, tagline, bio, ogDescription } = site.data;
       <p>{bio}</p>
     </section>
 
-    <!-- Projects section added in Task 10 -->
+    <section class="section" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects</h2>
+      <div class="projects-grid">
+        {projects.map((entry) => <ProjectCard project={entry.data} />)}
+      </div>
+    </section>
+
     <!-- Contact section added in Task 11 -->
   </main>
 
@@ -66,5 +77,11 @@ const { name, tagline, bio, ogDescription } = site.data;
     font-size: var(--text-sm);
     padding: var(--space-4);
     text-align: center;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+    gap: var(--space-4);
   }
 </style>

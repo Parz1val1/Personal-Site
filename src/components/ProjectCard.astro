@@ -1,0 +1,90 @@
+---
+import type { Project } from "../data/schemas";
+import VideoFacade from "./VideoFacade.astro";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="card pixel-box">
+  {
+    project.video && (
+      <VideoFacade
+        provider={project.video.provider}
+        id={project.video.id}
+        poster={project.video.poster}
+        title={project.title}
+      />
+    )
+  }
+  <div class="card__body">
+    <h3>{project.title}</h3>
+    <p>{project.description}</p>
+    {
+      project.tags.length > 0 && (
+        <ul class="card__tags" role="list">
+          {project.tags.map((tag) => (
+            <li>{tag}</li>
+          ))}
+        </ul>
+      )
+    }
+    {
+      project.links.length > 0 && (
+        <p class="card__links">
+          {project.links.map((link) => (
+            <a href={link.url}>{link.label}</a>
+          ))}
+        </p>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .card__body {
+    padding: var(--space-3) var(--space-4) var(--space-4);
+  }
+
+  .card__body h3 {
+    font-size: var(--text-lg);
+    margin: 0 0 var(--space-2);
+  }
+
+  .card__body p {
+    margin: 0 0 var(--space-3);
+  }
+
+  .card__tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-3);
+    padding: 0;
+  }
+
+  .card__tags li {
+    font-family: var(--font-pixel);
+    font-size: var(--text-sm);
+    color: var(--c-text-dim);
+    border: 2px solid var(--c-border);
+    padding: var(--space-1) var(--space-2);
+  }
+
+  .card__links {
+    margin: 0;
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .card__links a {
+    font-family: var(--font-pixel);
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+</style>
