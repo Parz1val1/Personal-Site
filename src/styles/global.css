@@ -1,0 +1,90 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.65;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-pixel);
+  line-height: 1.25;
+  color: var(--c-accent);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--c-link);
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 100;
+  background: var(--c-accent);
+  color: var(--c-bg);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-pixel);
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* Hard-edged building blocks shared across the standalone view */
+.pixel-box {
+  background: var(--c-surface);
+  border: var(--border-px) solid var(--c-border);
+  box-shadow: var(--shadow-step) var(--shadow-step) 0 var(--c-bg-deep);
+}
+
+.btn {
+  display: inline-block;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  background: var(--c-accent);
+  color: var(--c-bg);
+  border: var(--border-px) solid var(--c-bg-deep);
+  box-shadow: var(--shadow-step) var(--shadow-step) 0 var(--c-bg-deep);
+  font-family: var(--font-pixel);
+  font-size: var(--text-base);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--c-accent-2);
+}
+
+.btn:active {
+  translate: var(--shadow-step) var(--shadow-step);
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

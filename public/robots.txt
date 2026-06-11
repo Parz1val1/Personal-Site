@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# PLACEHOLDER domain — swapped at launch alongside astro.config.mjs `site`.
+Sitemap: https://personal-site.example.com/sitemap-index.xml
