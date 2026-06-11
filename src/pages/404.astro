@@ -1,0 +1,27 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="404 — Not found" description="Page not found." noindex>
+  <main id="main" class="lost">
+    <h1>404</h1>
+    <p>This room doesn't exist. The one with all the projects is over here:</p>
+    <a class="btn" href="/">Back home</a>
+  </main>
+</Base>
+
+<style>
+  .lost {
+    min-height: 80vh;
+    display: grid;
+    place-content: center;
+    gap: var(--space-3);
+    text-align: center;
+    padding: var(--space-4);
+  }
+
+  .lost h1 {
+    font-size: var(--text-2xl);
+    margin: 0;
+  }
+</style>
