@@ -31,7 +31,7 @@ export const siteSchema = z.object({
   bio: z.string().min(1),
   email: z.email(),
   // Required (no default): the site always ships with at least one profile link.
-  socials: z.array(z.object({ label: z.string().min(1), url: httpUrl })),
+  socials: z.array(z.object({ label: z.string().min(1), url: httpUrl })).min(1),
   ogDescription: z.string().min(1),
 });
 

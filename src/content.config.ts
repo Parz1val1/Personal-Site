@@ -12,6 +12,8 @@ export const collections = {
     schema: flavorSchema,
   }),
   // Singleton: a one-element array so the file() loader gets an id.
+  // Keep EXACTLY one element — extra elements would load as additional
+  // silently-accepted entries that getEntry("site", "main") ignores.
   site: defineCollection({
     loader: file("./src/content/site.json"),
     schema: siteSchema,

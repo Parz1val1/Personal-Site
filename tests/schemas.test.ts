@@ -80,4 +80,7 @@ describe("siteSchema", () => {
     const bad = { ...validSite, socials: [{ label: "x", url: "javascript:alert(1)" }] };
     expect(() => siteSchema.parse(bad)).toThrow();
   });
+  it("rejects an empty socials list", () => {
+    expect(() => siteSchema.parse({ ...validSite, socials: [] })).toThrow();
+  });
 });
