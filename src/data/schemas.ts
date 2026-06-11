@@ -14,7 +14,7 @@ export const projectSchema = z.object({
   description: z.string().min(1), // standalone page copy
   tags: z.array(z.string()).default([]),
   video: videoSchema.optional(),
-  links: z.array(z.object({ label: z.string().min(1), url: z.string().url() })).default([]),
+  links: z.array(z.object({ label: z.string().min(1), url: z.url() })).default([]),
   order: z.number().int(),
 });
 
@@ -26,8 +26,8 @@ export const siteSchema = z.object({
   name: z.string().min(1),
   tagline: z.string().min(1),
   bio: z.string().min(1),
-  email: z.string().email(),
-  socials: z.array(z.object({ label: z.string().min(1), url: z.string().url() })),
+  email: z.email(),
+  socials: z.array(z.object({ label: z.string().min(1), url: z.url() })),
   ogDescription: z.string().min(1),
 });
 
