@@ -20,6 +20,7 @@ const APPROVED_PAIRS: Array<[fg: string, bg: string]> = [
   ["--c-link", "--c-bg"],
   ["--c-text", "--c-surface"],
   ["--c-text-dim", "--c-surface"],
+  ["--c-link", "--c-surface"], // links inside cards
   ["--c-bg", "--c-accent"], // dark text on accent buttons
   ["--c-bg", "--c-accent-2"], // dark text on hover-state buttons
 ];
