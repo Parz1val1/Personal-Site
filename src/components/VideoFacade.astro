@@ -27,6 +27,7 @@ const embedUrl =
       iframe.src = facade.dataset.embedUrl ?? "";
       iframe.title = facade.dataset.videoTitle ?? "Video";
       iframe.allow = "autoplay; fullscreen; picture-in-picture";
+      iframe.allowFullscreen = true;
       iframe.className = "facade__iframe";
       facade.replaceChildren(iframe);
       iframe.focus();

@@ -27,6 +27,10 @@ describe("projectSchema", () => {
     const bad = { ...validProject, video: { ...validProject.video, provider: "dailymotion" } };
     expect(() => projectSchema.parse(bad)).toThrow();
   });
+  it("rejects a video id with path characters", () => {
+    const bad = { ...validProject, video: { ...validProject.video, id: "abc/../evil" } };
+    expect(() => projectSchema.parse(bad)).toThrow();
+  });
   it("rejects a non-URL link", () => {
     const bad = { ...validProject, links: [{ label: "x", url: "not-a-url" }] };
     expect(() => projectSchema.parse(bad)).toThrow();

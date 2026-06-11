@@ -7,7 +7,7 @@ const httpUrl = z.url({ protocol: /^https?$/ });
  *  (including provider thumbnails) before the visitor clicks play. Spec §4. */
 export const videoSchema = z.object({
   provider: z.enum(["youtube", "vimeo"]),
-  id: z.string().min(1),
+  id: z.string().regex(/^[A-Za-z0-9_-]+$/, "video id must contain only letters, digits, _ or -"),
   poster: z.string().min(1).startsWith("/", "poster must be a root-relative self-hosted path"),
 });
 
