@@ -1,7 +1,7 @@
 /** WCAG 2.x relative luminance and contrast ratio (https://www.w3.org/TR/WCAG21/#dfn-contrast-ratio). */
 
 export function hexToRgb(hex: string): [number, number, number] {
-  const raw = hex.replace("#", "");
+  const raw = hex.trim().replace(/^#/, "");
   const six =
     raw.length === 3
       ? raw

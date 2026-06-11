@@ -18,6 +18,9 @@ describe("relativeLuminance", () => {
     expect(relativeLuminance("#000000")).toBe(0);
     expect(relativeLuminance("#ffffff")).toBeCloseTo(1, 5);
   });
+  it("matches the known value for pure red", () => {
+    expect(relativeLuminance("#ff0000")).toBeCloseTo(0.2126, 4);
+  });
 });
 
 describe("contrastRatio", () => {
@@ -31,6 +34,6 @@ describe("contrastRatio", () => {
     );
   });
   it("matches known WCAG value for red on white", () => {
-    expect(contrastRatio("#ff0000", "#ffffff")).toBeCloseTo(4.0, 1);
+    expect(contrastRatio("#ff0000", "#ffffff")).toBeCloseTo(3.998, 3);
   });
 });
