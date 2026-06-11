@@ -17,21 +17,23 @@ const [user = "", domain = ""] = email.split("@");
 
 <section class="section" aria-labelledby="contact-heading">
   <h2 id="contact-heading">Get in touch</h2>
-  <div class="contact">
-    <Fragment set:html={`<a class="btn" href="mailto:${encoded}">${encoded}</a>`} />
-    <button class="btn" type="button" aria-live="polite" data-user={user} data-domain={domain}>
-      Copy email
-    </button>
+  <div class="pixel-box contact-panel">
+    <div class="contact">
+      <Fragment set:html={`<a class="btn" href="mailto:${encoded}">${encoded}</a>`} />
+      <button class="btn" type="button" aria-live="polite" data-user={user} data-domain={domain}>
+        Copy email
+      </button>
+    </div>
+    <ul class="socials" role="list">
+      {
+        socials.map((s) => (
+          <li>
+            <a href={s.url}>{s.label}</a>
+          </li>
+        ))
+      }
+    </ul>
   </div>
-  <ul class="socials" role="list">
-    {
-      socials.map((s) => (
-        <li>
-          <a href={s.url}>{s.label}</a>
-        </li>
-      ))
-    }
-  </ul>
 </section>
 
 <script>
@@ -50,6 +52,10 @@ const [user = "", domain = ""] = email.split("@");
 </script>
 
 <style>
+  .contact-panel {
+    padding: var(--space-3) var(--space-4);
+  }
+
   .contact {
     display: flex;
     flex-wrap: wrap;

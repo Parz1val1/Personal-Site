@@ -6,8 +6,8 @@ import { PNG } from "pngjs";
 const W = 1200;
 const H = 630;
 const BORDER = 24;
-const bg = [0x1a, 0x1c, 0x2c];
-const accent = [0xff, 0xcd, 0x75];
+const bg = [0x56, 0x45, 0x92]; // dusty grape
+const accent = [0x1a, 0xc8, 0xed]; // sky aqua
 
 const png = new PNG({ width: W, height: H });
 for (let y = 0; y < H; y++) {

@@ -70,8 +70,9 @@ Default: every object except the hidden drawer has `countsTowardCompletion: true
 - `src/styles/tokens.css` is **canonical**: locked palette, type scale, spacing scale, hard-edged border/stepped-shadow styles, `--font-pixel`, `--font-body`. Both views import it; the island styles against the same custom properties. No smooth gradients anywhere.
 - `scripts/export-palette.mjs` exports the token palette to `.gpl`/`.hex` swatch files for art tools (Aseprite etc.). Palette is defined once; the art tool consumes a generated artifact.
 - **Fonts:** `--font-pixel` for headings/UI accents (placeholder: a free bitmap-style webfont, e.g. Silkscreen, swappable at the token level); `--font-body` for body copy (legible face at comfortable sizes — placeholder: system font stack). No paragraphs in the pixel font.
-- **Pending input:** real palette hexes come from the user's design-pass reference. Placeholder palette holds until then; swapping it touches only `tokens.css` (+ regenerated swatches).
-- **Contrast rule:** text/background pairs must meet WCAG AA. If the art palette can't hit AA for text, one or two dedicated UI-text shades get added to the locked palette (documented in `asset-spec.md`).
+- **LOCKED palette (user-supplied 2026-06-11):** five core colors — dusty grape `#564592` (page background), wisteria `#b79ced` (floating panels/cards), black `#000000` (general text), sky aqua `#1ac8ed` (large pixel headings + button faces), ocean mist `#2ebfa5` (decoration, hover grounds, large accents) — plus derived AA-support shades: deep grape `#2a2147` (shadows/borders/secondary panel text), pale lavender `#ece4fb` (text directly on grape), light ocean mist `#7ee8d2` (links on grape).
+- **Palette ground rules** (enforced by the palette-contrast test): general text is black and lives on wisteria panels (8.99:1); text directly on grape uses pale lavender (6.41:1); sky aqua carries only large pixel headings on grape (3.96:1, AA-large) and button faces with black text (10.53:1) — never body-size text on grape, never any text on wisteria (1.17:1); links on grape use light ocean mist (5.39:1), links on panels render black with ocean-mist underline decoration (true mist is unreadable on both grounds at body size: 3.42 / 1.01).
+- **Contrast rule:** the palette test enforces two tiers — 4.5:1 for body-text pairs, 3:1 for pairs the CSS guarantees render only at large size. Any new text/ground combination must be added to the appropriate tier. The room's art palette (Plan 2) may extend the locked set; the same rules apply to any text it carries.
 
 ## 6. Room manifest
 
@@ -228,7 +229,7 @@ Audio, CMS, blog, analytics, i18n, mobile/touch support for the room, contact fo
 
 ## 15. Pending inputs (don't block scaffolding)
 
-1. Design-pass reference image + palette hexes → tokens.css, asset-spec, canvas-size confirmation.
+1. Design-pass reference image → asset-spec and canvas-size confirmation. (Palette: LOCKED 2026-06-11, see §5 — room art may extend it.)
 2. Final pixel font choice (placeholder webfont until then).
 3. Real project copy + video IDs (placeholder entries until then).
 4. Hand-authored art (placeholders until M6).

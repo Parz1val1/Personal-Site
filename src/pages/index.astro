@@ -22,7 +22,9 @@ const projects = (await getCollection("projects")).sort(
   <main id="main">
     <section class="section" aria-labelledby="about-heading">
       <h2 id="about-heading">About</h2>
-      <p>{bio}</p>
+      <div class="pixel-box section__panel">
+        <p>{bio}</p>
+      </div>
     </section>
 
     <section class="section" aria-labelledby="projects-heading">
@@ -70,6 +72,14 @@ const projects = (await getCollection("projects")).sort(
 
   .section h2 {
     font-size: var(--text-xl);
+  }
+
+  .section__panel {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .section__panel p {
+    margin: 0;
   }
 
   .footer {

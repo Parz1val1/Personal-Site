@@ -4,3 +4,4 @@ dist/
 .env
 .env.*
 lighthouse-report.json
+.claude/

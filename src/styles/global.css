@@ -7,7 +7,8 @@
 body {
   margin: 0;
   background: var(--c-bg);
-  color: var(--c-text);
+  /* Default text color is for the grape background; panels switch to black. */
+  color: var(--c-text-dim);
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: 1.65;
@@ -41,7 +42,7 @@ a {
   top: 0;
   z-index: 100;
   background: var(--c-accent);
-  color: var(--c-bg);
+  color: var(--c-text);
   padding: var(--space-2) var(--space-3);
   font-family: var(--font-pixel);
 }
@@ -50,11 +51,34 @@ a {
   left: 0;
 }
 
-/* Hard-edged building blocks shared across the standalone view */
+/* Hard-edged building blocks shared across the standalone view.
+   Panels are the home of general (black) text; these rules re-ground
+   text, headings, links, and focus rings for the light wisteria surface. */
 .pixel-box {
   background: var(--c-surface);
   border: var(--border-px) solid var(--c-border);
   box-shadow: var(--shadow-step) var(--shadow-step) 0 var(--c-bg-deep);
+  color: var(--c-text);
+}
+
+.pixel-box h1,
+.pixel-box h2,
+.pixel-box h3 {
+  color: var(--c-text);
+}
+
+.pixel-box a:not(.btn) {
+  color: var(--c-text);
+  text-decoration-color: var(--c-accent-2);
+  text-decoration-thickness: 2px;
+}
+
+.pixel-box a:not(.btn):hover {
+  background: var(--c-accent-2);
+}
+
+.pixel-box :focus-visible {
+  outline-color: var(--c-bg-deep);
 }
 
 .btn {
@@ -64,7 +88,7 @@ a {
   min-height: 44px;
   padding: var(--space-2) var(--space-4);
   background: var(--c-accent);
-  color: var(--c-bg);
+  color: var(--c-text);
   border: var(--border-px) solid var(--c-bg-deep);
   box-shadow: var(--shadow-step) var(--shadow-step) 0 var(--c-bg-deep);
   font-family: var(--font-pixel);

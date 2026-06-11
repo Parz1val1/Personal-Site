@@ -3,21 +3,32 @@
    Both views consume these. The art-tool swatch export (Plan 2)
    parses this file. Keep colors as 6-digit hex on single lines.
 
-   PLACEHOLDER palette: Sweetie 16 subset. Swap values (not names)
-   when the locked palette from the design-pass reference lands.
-   The palette-contrast test enforces WCAG AA on approved pairs.
+   LOCKED site palette (user-supplied 2026-06-11): five core
+   colors plus derived shades added for WCAG AA (sanctioned by
+   spec §5). Ground rules enforced by the palette-contrast test:
+   - General text is BLACK and lives on wisteria panels (8.99:1).
+   - Text directly on the grape background uses --c-text-dim.
+   - Sky aqua is for LARGE pixel headings on grape only (3.96:1,
+     AA-large) and button faces (black text, 10.53:1) — never
+     body-size text on grape, never any text on wisteria.
+   - Links on grape use --c-link (lightened ocean mist); links on
+     panels render black with ocean-mist underline decoration,
+     because true mist is unreadable on both grounds at body size.
    ============================================================ */
 :root {
-  /* --- palette --- */
-  --c-bg-deep: #11121f;   /* deepest shadow, page edges, stepped shadows */
-  --c-bg: #1a1c2c;        /* page background, night blue-black */
-  --c-surface: #333c57;   /* cards, panels */
-  --c-border: #566c86;    /* hard edges, dividers */
-  --c-text: #f4f4f4;      /* primary text */
-  --c-text-dim: #94b0c2;  /* secondary text */
-  --c-accent: #ffcd75;    /* lamp amber — headings, focus, buttons */
-  --c-accent-2: #ef7d57;  /* ember orange — hover, highlights */
-  --c-link: #73eff7;      /* links */
+  /* --- palette: core --- */
+  --c-bg: #564592;        /* dusty grape — page background */
+  --c-surface: #b79ced;   /* wisteria — floating panels, cards */
+  --c-text: #000000;      /* black — general text on panels and button faces */
+  --c-accent: #1ac8ed;    /* sky aqua — large pixel headings on grape, button faces */
+  --c-accent-2: #2ebfa5;  /* ocean mist — decoration, hover grounds, large accents */
+
+  /* --- palette: derived shades (AA support) --- */
+  --c-bg-deep: #2a2147;   /* deep grape — stepped shadows, page edges */
+  --c-border: #2a2147;    /* hard edges, dividers */
+  --c-text-dim: #ece4fb;  /* pale lavender — text directly on the grape bg */
+  --c-text-soft: #2a2147; /* deep grape — secondary text on panels (tags) */
+  --c-link: #7ee8d2;      /* light ocean mist — links on the grape bg */
 
   /* --- type --- */
   --font-pixel: "Silkscreen", monospace; /* PLACEHOLDER pixel font; headings + UI accents only */
