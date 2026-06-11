@@ -2,6 +2,7 @@
 import { getCollection, getEntry } from "astro:content";
 import Base from "../layouts/Base.astro";
 import ProjectCard from "../components/ProjectCard.astro";
+import ContactSection from "../components/ContactSection.astro";
 
 const site = await getEntry("site", "main");
 if (!site) throw new Error("site content entry 'main' is missing");
@@ -31,7 +32,7 @@ const projects = (await getCollection("projects")).sort(
       </div>
     </section>
 
-    <!-- Contact section added in Task 11 -->
+    <ContactSection email={site.data.email} socials={site.data.socials} />
   </main>
 
   <footer class="footer">
