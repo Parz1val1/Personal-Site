@@ -3,9 +3,9 @@ import { describe, expect, it } from "vitest";
 import { contrastRatio } from "../src/lib/contrast";
 
 function readTokens(): Record<string, string> {
-  const css = readFileSync("src/styles/tokens.css", "utf8");
+  const css = readFileSync(new URL("../src/styles/tokens.css", import.meta.url), "utf8");
   const map: Record<string, string> = {};
-  for (const m of css.matchAll(/(--[\w-]+):\s*(#[0-9a-fA-F]{3,6})\b/g)) {
+  for (const m of css.matchAll(/(--[\w-]+):\s*(#[0-9a-fA-F]{6})\b/g)) {
     map[m[1]!] = m[2]!;
   }
   return map;
@@ -21,6 +21,7 @@ const APPROVED_PAIRS: Array<[fg: string, bg: string]> = [
   ["--c-text", "--c-surface"],
   ["--c-text-dim", "--c-surface"],
   ["--c-bg", "--c-accent"], // dark text on accent buttons
+  ["--c-bg", "--c-accent-2"], // dark text on hover-state buttons
 ];
 
 describe("token palette", () => {
