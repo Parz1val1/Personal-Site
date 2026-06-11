@@ -1,0 +1,14 @@
+[
+  {
+    "id": "main",
+    "name": "Tim Hawkins",
+    "tagline": "PLACEHOLDER — games, tools, and late-night experiments.",
+    "bio": "PLACEHOLDER — a short bio paragraph. Who you are, what you build, what you care about. Two to four sentences.",
+    "email": "timmyhawkins3@gmail.com",
+    "socials": [
+      { "label": "GitHub", "url": "https://github.com/example" },
+      { "label": "LinkedIn", "url": "https://linkedin.com/in/example" }
+    ],
+    "ogDescription": "PLACEHOLDER — portfolio of Tim Hawkins: games, tools, and experiments."
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "title": "Mobile Work",
+  "blurb": "PLACEHOLDER — mobile apps and prototypes.",
+  "description": "PLACEHOLDER — description of mobile projects: what was built, for whom, with what.",
+  "tags": ["mobile"],
+  "video": { "provider": "youtube", "id": "PLACEHOLDER_ID", "poster": "/posters/mobile-work.svg" },
+  "links": [{ "label": "GitHub", "url": "https://github.com/example/placeholder" }],
+  "order": 2
+}

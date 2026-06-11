@@ -1,0 +1,8 @@
+{
+  "title": "3D & Game Art",
+  "blurb": "PLACEHOLDER — 3D modeling and game work.",
+  "description": "PLACEHOLDER — description of 3D / game art projects.",
+  "tags": ["3d", "games"],
+  "links": [{ "label": "ArtStation", "url": "https://artstation.com/example" }],
+  "order": 3
+}

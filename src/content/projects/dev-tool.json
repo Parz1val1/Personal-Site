@@ -1,0 +1,8 @@
+{
+  "title": "Dev Tooling Side Project",
+  "blurb": "PLACEHOLDER — a developer tooling side project.",
+  "description": "PLACEHOLDER — what the tool does, why it exists, what it's built with.",
+  "tags": ["tooling"],
+  "links": [{ "label": "GitHub", "url": "https://github.com/example/placeholder-tool" }],
+  "order": 4
+}

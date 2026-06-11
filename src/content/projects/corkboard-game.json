@@ -1,0 +1,9 @@
+{
+  "title": "Game Project",
+  "blurb": "PLACEHOLDER — a game project pinned to the corkboard.",
+  "description": "PLACEHOLDER — description of the game: genre, engine, role.",
+  "tags": ["games"],
+  "video": { "provider": "youtube", "id": "PLACEHOLDER_ID", "poster": "/posters/corkboard-game.svg" },
+  "links": [],
+  "order": 5
+}

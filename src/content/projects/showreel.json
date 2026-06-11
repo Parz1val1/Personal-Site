@@ -1,0 +1,9 @@
+{
+  "title": "Showreel",
+  "blurb": "PLACEHOLDER — a rolling cut of recent work: games, tools, and experiments.",
+  "description": "PLACEHOLDER — longer showreel description for the standalone page. Two or three sentences about the breadth of work shown in the reel.",
+  "tags": ["showreel"],
+  "video": { "provider": "youtube", "id": "PLACEHOLDER_ID", "poster": "/posters/showreel.svg" },
+  "links": [],
+  "order": 1
+}
