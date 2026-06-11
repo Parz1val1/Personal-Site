@@ -154,13 +154,20 @@ Three scripts make the zero-code-swap constraint enforceable:
 
 Drop-in flow: replace files in `public/room/sprites/**` → run `npm run check:assets` → done. Position/z/hotspot tuning happens in the manifest (data, not code).
 
-## 9. Capability routing & SEO
+## 9. Navigation, capability routing & SEO
 
 - `/` is canonical and indexed; full content as static HTML.
 - Inline `<head>` script on `/`: if `matchMedia("(hover: hover) and (pointer: fine)")` matches **and** viewport ≥ `minViewport` **and** no `sessionStorage` opt-out **and** `!navigator.webdriver` → `location.replace("/room")` before first paint. Capability detection, no UA sniffing.
 - `/room`: `<meta name="robots" content="noindex">`, canonical → `/`.
 - "In a hurry? →" note in the room links to `/` and sets the session opt-out (no redirect bounce-back).
-- Standalone view shows "try the interactive version (best on desktop)" — visible only on hover-capable devices via media query.
+
+**Site navigation (standalone view, lands in M2):**
+
+- A `<nav>` landmark in the Base layout (so the 404 page gets it too) with jump links — About / Projects / Contact — targeting the existing section anchors, plus the "try the interactive version (best on desktop)" room link, visible only on hover-capable devices via media query.
+- **Progressive enhancement hamburger:** the links render as a plain visible list in the HTML; a small script (same pattern as the copy-email button) collapses them behind a hamburger `<button>` with `aria-expanded`/`aria-controls` at narrow widths. With JS disabled, mobile gets the expanded vertical list — never a dead hamburger.
+- Touch targets ≥ 44px, pixel styling from existing tokens/classes, the standard amber focus ring.
+- Smooth scrolling to anchors gated behind `prefers-reduced-motion: no-preference`.
+- Default behavior: sticky bar on desktop, static (scrolls away) on mobile — tunable at implementation.
 - `prefers-reduced-motion` does **not** change routing; the room honors it internally.
 - **Known risk:** JS-redirecting the canonical page can confuse crawlers despite the `navigator.webdriver` gate. M6 includes Search Console verification post-deploy; pre-agreed fallback (one-line change): drop the auto-redirect, make the room link a prominent styled "door" on `/`.
 - SEO basics: per-page titles/descriptions, Open Graph + Twitter cards, OG image (placeholder generated; real pixel-art card authored in M6), sitemap, canonicals.
@@ -189,7 +196,7 @@ docs/superpowers/specs/
 
 ## 11. Accessibility
 
-- **Standalone:** semantic landmarks, single `h1`, skip link, chunky on-theme `:focus-visible`, touch targets ≥ 44px, WCAG AA contrast on all text pairs, fluid reflow, `prefers-reduced-motion` respected; animation decorative, never required.
+- **Standalone:** semantic landmarks, single `h1`, skip link, chunky on-theme `:focus-visible`, touch targets ≥ 44px, WCAG AA contrast on all text pairs, fluid reflow, `prefers-reduced-motion` respected; animation decorative, never required. Nav disclosure (hamburger) uses a real `<button>` with `aria-expanded`/`aria-controls` and works without JS (§9).
 - **Room:** hotspots are labeled, tabbable buttons; panels are focus-trapped dialogs with `Esc`; meter is an `aria` progressbar; full keyboard operability despite being a pointer-first experience.
 - **Video:** facade is a labeled button with self-hosted poster `<img>` (lazy-loaded); the third-party iframe loads only on click.
 
@@ -197,7 +204,7 @@ docs/superpowers/specs/
 
 - **M0 — Foundations:** Astro + TS scaffold, tokens.css + fonts, content schemas + placeholder entries for every slot (§4 table), Cloudflare Pages pipeline live.
 - **M1 — Standalone view (independently shippable):** full responsive page — hero/bio, project grid with video facades, contact (mailto + copy), meta/OG/sitemap, a11y pass. Site is publicly launchable after M1.
-- **M2 — Room scaffold:** manifest + schema, placeholder generator + asset validator, `asset-spec.md`, stage rendering background + static sprites from manifest with integer scaling, capability routing live.
+- **M2 — Room scaffold:** manifest + schema, placeholder generator + asset validator, `asset-spec.md`, stage rendering background + static sprites from manifest with integer scaling, capability routing live, site nav on the standalone view (About/Projects/Contact jump links + the room link, hamburger on mobile).
 - **M3 — Interactivity:** hover highlights + label tips, custom cursor, discovery panels (9-slice, focus-trapped, real text), video facade in panels, content binding end-to-end.
 - **M4 — Discovery layer:** completion meter, localStorage persistence, reward unlock (drawer/note + contact action).
 - **M5 — Atmosphere:** spritesheet animation pipeline, ambient loops (steam, cat, rain, record), opening sequence, reduced-motion paths, hurry-note.
