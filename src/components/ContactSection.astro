@@ -19,7 +19,7 @@ const [user = "", domain = ""] = email.split("@");
   <h2 id="contact-heading">Get in touch</h2>
   <div class="contact">
     <Fragment set:html={`<a class="btn" href="mailto:${encoded}">${encoded}</a>`} />
-    <button class="btn" type="button" data-user={user} data-domain={domain}>
+    <button class="btn" type="button" aria-live="polite" data-user={user} data-domain={domain}>
       Copy email
     </button>
   </div>
@@ -35,10 +35,12 @@ const [user = "", domain = ""] = email.split("@");
 </section>
 
 <script>
+  // One ContactSection per page: querySelector intentionally targets the single copy button.
   const button = document.querySelector<HTMLButtonElement>("button[data-user]");
   button?.addEventListener("click", async () => {
     const email = `${button.dataset.user}@${button.dataset.domain}`;
-    await navigator.clipboard.writeText(email);
+    // Clipboard API needs a secure context; fail quietly if unavailable.
+    await navigator.clipboard.writeText(email).catch(() => {});
     const original = button.textContent;
     button.textContent = "Copied!";
     setTimeout(() => {
