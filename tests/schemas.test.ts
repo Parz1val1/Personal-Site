@@ -31,6 +31,21 @@ describe("projectSchema", () => {
     const bad = { ...validProject, links: [{ label: "x", url: "not-a-url" }] };
     expect(() => projectSchema.parse(bad)).toThrow();
   });
+  it("rejects a javascript: URI in links", () => {
+    const bad = { ...validProject, links: [{ label: "x", url: "javascript:alert(1)" }] };
+    expect(() => projectSchema.parse(bad)).toThrow();
+  });
+  it("rejects an external (non-root-relative) poster", () => {
+    const bad = {
+      ...validProject,
+      video: { ...validProject.video, poster: "https://img.youtube.com/vi/abc123/hq.jpg" },
+    };
+    expect(() => projectSchema.parse(bad)).toThrow();
+  });
+  it("rejects a blurb over 280 characters", () => {
+    const bad = { ...validProject, blurb: "a".repeat(281) };
+    expect(() => projectSchema.parse(bad)).toThrow();
+  });
   it("rejects a missing title", () => {
     const { title, ...bad } = validProject;
     expect(() => projectSchema.parse(bad)).toThrow();
@@ -60,5 +75,9 @@ describe("siteSchema", () => {
   });
   it("rejects an invalid email", () => {
     expect(() => siteSchema.parse({ ...validSite, email: "nope" })).toThrow();
+  });
+  it("rejects a javascript: URI in socials", () => {
+    const bad = { ...validSite, socials: [{ label: "x", url: "javascript:alert(1)" }] };
+    expect(() => siteSchema.parse(bad)).toThrow();
   });
 });
