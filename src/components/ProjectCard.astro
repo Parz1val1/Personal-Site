@@ -51,4 +51,14 @@ const { project, featured = false } = Astro.props;
     .card--featured { flex-direction: column; }
     .card--featured :global(.facade) { border-right: none; border-bottom: var(--border-px) solid var(--c-grape); }
   }
+
+  .card:hover { transform: translate(-3px,-3px); box-shadow: 9px 9px 0 var(--c-drop), 0 0 0 2px var(--c-accent), 0 0 22px rgba(26,200,237,0.28), 0 0 60px 14px rgba(135,99,214,0.45), 0 0 110px 30px rgba(86,69,146,0.40); }
+  .card__ripple { position: absolute; left: 50%; top: 50%; z-index: -1; width: 60px; height: 60px; border-radius: 50%; transform: translate(-50%,-50%) scale(0); background: radial-gradient(circle, rgba(135,99,214,0.55) 0%, rgba(86,69,146,0.40) 32%, rgba(86,69,146,0.16) 55%, rgba(86,69,146,0) 72%); pointer-events: none; opacity: 0; will-change: transform, opacity; }
+  .card:hover .card__ripple { animation: card-ripple 900ms cubic-bezier(.16,.7,.3,1) forwards; }
+  @keyframes card-ripple {
+    0% { transform: translate(-50%,-50%) scale(0); opacity: 0; }
+    12% { opacity: 0.95; }
+    100% { transform: translate(-50%,-50%) scale(34); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .card:hover .card__ripple { animation: none; } }
 </style>
