@@ -8,9 +8,9 @@ const site = await getEntry("site", "main");
 if (!site) throw new Error("site content entry 'main' is missing");
 const { name, tagline, bio, ogDescription } = site.data;
 
-const projects = (await getCollection("projects")).sort(
-  (a, b) => a.data.order - b.data.order,
-);
+const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+const featured = projects.find((p) => p.data.featured);
+const rest = projects.filter((p) => p !== featured);
 ---
 
 <Base title={`${name} — Portfolio`} description={ogDescription}>
@@ -27,10 +27,14 @@ const projects = (await getCollection("projects")).sort(
       </div>
     </section>
 
-    <section class="section" aria-labelledby="projects-heading">
-      <h2 id="projects-heading">Projects</h2>
-      <div class="projects-grid">
-        {projects.map((entry) => <ProjectCard project={entry.data} />)}
+    <section class="section work" id="work" aria-labelledby="work-heading">
+      <div class="sec-head">
+        <h2 class="sec-title" id="work-heading"><span class="sec-idx">01</span>SELECTED WORK</h2>
+        <span class="sec-meta">{projects.length} projects · 2023–2025</span>
+      </div>
+      <div class="work-grid">
+        {featured && <div class="work-grid__featured"><ProjectCard project={featured.data} featured /></div>}
+        {rest.map((entry) => <ProjectCard project={entry.data} />)}
       </div>
     </section>
 
@@ -90,9 +94,11 @@ const projects = (await getCollection("projects")).sort(
     text-align: center;
   }
 
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
-    gap: var(--space-4);
-  }
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 38px; }
+  .sec-title { font-family: var(--font-pixel); font-size: 24px; color: var(--c-heading); margin: 0; display: inline-flex; align-items: center; gap: 14px; }
+  .sec-idx { font-size: 11px; color: var(--c-accent-2); letter-spacing: 1px; }
+  .sec-meta { font-family: var(--font-mono); font-size: 12px; color: var(--c-faint); letter-spacing: 0.5px; }
+  .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .work-grid__featured { grid-column: 1 / -1; }
+  @media (max-width: 760px) { .work-grid { grid-template-columns: 1fr; gap: 22px; } .sec-title { font-size: 17px; } }
 </style>

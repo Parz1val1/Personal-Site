@@ -4,87 +4,51 @@ import VideoFacade from "./VideoFacade.astro";
 
 interface Props {
   project: Project;
+  featured?: boolean;
 }
-
-const { project } = Astro.props;
+const { project, featured = false } = Astro.props;
 ---
 
-<article class="card pixel-box">
-  {
-    project.video && (
-      <VideoFacade
-        provider={project.video.provider}
-        id={project.video.id}
-        poster={project.video.poster}
-        title={project.title}
-      />
-    )
-  }
+<article class:list={["card", { "card--featured": featured }]}>
+  <span class="card__ripple" aria-hidden="true"></span>
+  {project.video && (
+    <VideoFacade
+      provider={project.video.provider}
+      id={project.video.id}
+      poster={project.video.poster}
+      title={project.title}
+      category={project.category}
+      duration={project.duration}
+    />
+  )}
   <div class="card__body">
-    <h3>{project.title}</h3>
-    <p>{project.description}</p>
-    {
-      project.tags.length > 0 && (
-        <ul class="card__tags" role="list">
-          {project.tags.map((tag) => (
-            <li>{tag}</li>
-          ))}
-        </ul>
-      )
-    }
-    {
-      project.links.length > 0 && (
-        <p class="card__links">
-          {project.links.map((link) => (
-            <a href={link.url}>{link.label}</a>
-          ))}
-        </p>
-      )
-    }
+    <h3 class="card__title">{project.title}</h3>
+    <p class="card__blurb">{featured ? project.description : project.blurb}</p>
+    <p class="card__meta"><span>{project.year}</span><span class="card__sep" aria-hidden="true"></span><span>{project.role}</span></p>
+    {project.tags.length > 0 && (
+      <ul class="card__tags" role="list">{project.tags.map((t) => <li>{t}</li>)}</ul>
+    )}
   </div>
 </article>
 
 <style>
-  .card__body {
-    padding: var(--space-3) var(--space-4) var(--space-4);
-  }
+  .card { position: relative; display: flex; flex-direction: column; background: var(--c-s2); border: var(--border-px) solid var(--c-grape); box-shadow: 6px 6px 0 var(--c-drop); transition: transform .14s steps(2), box-shadow .14s; }
+  .card__body { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; background: var(--c-s2); }
+  .card__title { font-family: var(--font-pixel); font-size: 17px; color: var(--c-heading); margin: 0; line-height: 1.35; }
+  .card__blurb { font-size: 15px; line-height: 1.58; color: var(--c-muted); margin: 0; text-wrap: pretty; }
+  .card__meta { display: flex; align-items: center; gap: 10px; margin: 2px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.5px; color: var(--c-faint); }
+  .card__sep { width: 4px; height: 4px; background: var(--c-grape); }
+  .card__tags { display: flex; flex-wrap: wrap; gap: 7px; margin: 4px 0 0; padding: 0; list-style: none; }
+  .card__tags li { font-family: var(--font-pixel); font-size: 8px; letter-spacing: 0.5px; color: var(--c-accent); text-transform: uppercase; border: 2px solid var(--c-line); background: var(--c-s1); padding: 5px 8px 4px; }
 
-  .card__body h3 {
-    font-size: var(--text-lg);
-    margin: 0 0 var(--space-2);
-  }
-
-  .card__body p {
-    margin: 0 0 var(--space-3);
-  }
-
-  .card__tags {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-3);
-    padding: 0;
-  }
-
-  .card__tags li {
-    font-family: var(--font-pixel);
-    font-size: var(--text-sm);
-    color: var(--c-text-soft);
-    border: 2px solid var(--c-border);
-    padding: var(--space-1) var(--space-2);
-  }
-
-  .card__links {
-    margin: 0;
-    display: flex;
-    gap: var(--space-3);
-  }
-
-  .card__links a {
-    font-family: var(--font-pixel);
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
+  /* featured = row layout on desktop, stacks on mobile */
+  .card--featured { flex-direction: row; }
+  .card--featured :global(.facade) { flex: 1 1 58%; border-right: var(--border-px) solid var(--c-grape); border-bottom: none; }
+  .card--featured .card__body { flex: 1 1 42%; justify-content: center; padding: 36px 34px; }
+  .card--featured .card__title { font-size: 22px; }
+  .card--featured .card__blurb { font-size: 16px; color: var(--c-ink); }
+  @media (max-width: 760px) {
+    .card--featured { flex-direction: column; }
+    .card--featured :global(.facade) { border-right: none; border-bottom: var(--border-px) solid var(--c-grape); }
   }
 </style>
