@@ -15,4 +15,11 @@ describe("project content entries", () => {
       orders.length,
     );
   });
+  it("has at most one featured project", () => {
+    const featured = readdirSync(projectsDir)
+      .filter((f) => f.endsWith(".json"))
+      .map((f) => JSON.parse(readFileSync(new URL(f, projectsDir), "utf8")))
+      .filter((p) => p.featured === true);
+    expect(featured.length, `featured projects: ${featured.map((p) => p.title).join(", ")}`).toBeLessThanOrEqual(1);
+  });
 });

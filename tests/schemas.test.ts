@@ -5,6 +5,11 @@ const validProject = {
   title: "Showreel",
   blurb: "A rolling cut of recent work.",
   description: "Longer description for the standalone page.",
+  category: "SHOWREEL",
+  year: "2025",
+  role: "Direction · Edit",
+  duration: "1:24",
+  featured: true,
   tags: ["video"],
   video: { provider: "youtube", id: "abc123", poster: "/posters/showreel.svg" },
   links: [{ label: "GitHub", url: "https://github.com/example/repo" }],
@@ -53,6 +58,19 @@ describe("projectSchema", () => {
   it("rejects a missing title", () => {
     const { title, ...bad } = validProject;
     expect(() => projectSchema.parse(bad)).toThrow();
+  });
+  it("requires category, year, and role", () => {
+    for (const field of ["category", "year", "role"]) {
+      const bad = { ...validProject };
+      delete (bad as Record<string, unknown>)[field];
+      expect(() => projectSchema.parse(bad)).toThrow();
+    }
+  });
+  it("allows duration and featured to be omitted", () => {
+    const { duration, featured, ...rest } = validProject;
+    const parsed = projectSchema.parse(rest);
+    expect(parsed.featured).toBe(false);
+    expect(parsed.duration).toBeUndefined();
   });
 });
 

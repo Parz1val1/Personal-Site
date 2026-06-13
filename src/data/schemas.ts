@@ -15,6 +15,11 @@ export const projectSchema = z.object({
   title: z.string().min(1),
   blurb: z.string().min(1).max(280), // room panel copy — short by design
   description: z.string().min(1), // standalone page copy
+  category: z.string().min(1), // card/poster chip, e.g. "SHOWREEL"
+  year: z.string().min(1),
+  role: z.string().min(1), // e.g. "Direction · Edit"
+  duration: z.string().min(1).optional(), // clip length, e.g. "1:24"
+  featured: z.boolean().default(false), // span-2 hero card; at most one (checked in content-order test)
   tags: z.array(z.string().min(1)).default([]),
   video: videoSchema.optional(),
   links: z.array(z.object({ label: z.string().min(1), url: httpUrl })).default([]),
