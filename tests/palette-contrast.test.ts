@@ -19,17 +19,20 @@ function readTokens(): Record<string, string> {
  *  = 24px regular / 18.66px bold). A combination may live here only if the
  *  CSS guarantees it never renders at body size. */
 const AA_NORMAL: Array<[fg: string, bg: string]> = [
-  ["--c-text", "--c-surface"], // general copy on wisteria panels
-  ["--c-text-soft", "--c-surface"], // secondary text on panels (tags)
-  ["--c-text-dim", "--c-bg"], // chrome text directly on grape (tagline, footer)
-  ["--c-link", "--c-bg"], // links on the grape background
-  ["--c-text", "--c-accent"], // button faces / skip link
-  ["--c-text", "--c-accent-2"], // button hover ground, panel-link hover chips
+  ["--c-ink", "--c-s2"], // body copy on card/panel fill
+  ["--c-ink", "--c-bg"], // body copy on the night
+  ["--c-muted", "--c-s2"], // secondary / meta on panels
+  ["--c-faint", "--c-s2"], // tertiary captions on panels — must clear 4.5
+  ["--c-accent", "--c-bg"], // aqua links on the night
+  ["--c-accent", "--c-s2"], // aqua links on panels
+  ["--c-btn-ink", "--c-accent"], // dark button label on aqua
 ];
 
 const AA_LARGE: Array<[fg: string, bg: string]> = [
-  ["--c-accent", "--c-bg"], // sky-aqua pixel headings on grape
-  ["--c-accent-2", "--c-bg"], // large ocean-mist accents on grape
+  ["--c-heading", "--c-bg"], // wisteria headings on the night
+  ["--c-heading", "--c-s2"], // wisteria headings on panels
+  ["--c-accent-2", "--c-bg"], // teal category chips / large accents on night
+  ["--c-accent-2", "--c-s2"], // teal on panels
 ];
 
 describe("token palette", () => {

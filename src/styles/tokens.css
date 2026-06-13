@@ -3,36 +3,41 @@
    Both views consume these. The art-tool swatch export (Plan 2)
    parses this file. Keep colors as 6-digit hex on single lines.
 
-   LOCKED site palette (user-supplied 2026-06-11): five core
-   colors plus derived shades added for WCAG AA (sanctioned by
-   spec §5). Ground rules enforced by the palette-contrast test:
-   - General text is BLACK and lives on wisteria panels (8.99:1).
-   - Text directly on the grape background uses --c-text-dim.
-   - Sky aqua is for LARGE pixel headings on grape only (3.96:1,
-     AA-large) and button faces (black text, 10.53:1) — never
-     body-size text on grape, never any text on wisteria.
-   - Links on grape use --c-link (lightened ocean mist); links on
-     panels render black with ocean-mist underline decoration,
-     because true mist is unreadable on both grounds at body size.
+   LOCKED palette — "After Hours" night mapping (spec §5/§16,
+   2026-06-13). Five core hexes; roles per the design handoff.
+   Black is the page; grape is structure; a dark grape-tinted
+   elevation scale carries near-white body text. Two-tier
+   contrast test (4.5 body / 3.0 large) enforces every pair.
    ============================================================ */
 :root {
-  /* --- palette: core --- */
-  --c-bg: #564592;        /* dusty grape — page background */
-  --c-surface: #b79ced;   /* wisteria — floating panels, cards */
-  --c-text: #000000;      /* black — general text on panels and button faces */
-  --c-accent: #1ac8ed;    /* sky aqua — large pixel headings on grape, button faces */
-  --c-accent-2: #2ebfa5;  /* ocean mist — decoration, hover grounds, large accents */
+  /* --- core locked palette --- */
+  --c-bg: #000000;        /* the night — page background */
+  --c-grape: #564592;     /* raised STRUCTURE: borders, chips, active rings, title bars */
+  --c-accent: #1ac8ed;    /* sky aqua — links, interactive, focus, play buttons */
+  --c-accent-2: #2ebfa5;  /* ocean mist — secondary accent (category chips, tertiary) */
+  --c-heading: #b79ced;   /* wisteria — headings & large text on dark */
 
-  /* --- palette: derived shades (AA support) --- */
-  --c-bg-deep: #2a2147;   /* deep grape — stepped shadows, page edges */
-  --c-border: #2a2147;    /* hard edges, dividers */
-  --c-text-dim: #ece4fb;  /* pale lavender — text directly on the grape bg */
-  --c-text-soft: #2a2147; /* deep grape — secondary text on panels (tags) */
-  --c-link: #7ee8d2;      /* light ocean mist — links on the grape bg */
+  /* --- derived grape-tinted elevation --- */
+  --c-s1: #0b0916;        /* deep section band */
+  --c-s2: #15102a;        /* card / panel fill — home of body text */
+  --c-s3: #221a40;        /* raised / hover within a card */
+  --c-line: #362c5e;      /* hairline divider, chip borders */
+
+  /* --- text on dark --- */
+  --c-ink: #ece9f7;       /* body — near-white lavender (15.4:1 on s2) */
+  --c-muted: #aba0ce;     /* secondary / meta (7.6:1 on s2) */
+  --c-faint: #9a8fc4;     /* tertiary / captions — lightened to clear 4.5:1 on s2 */
+  --c-btn-ink: #04161c;   /* dark label on aqua/teal button faces */
+
+  /* --- stepped shadow inks --- */
+  --c-drop: #000000;
+  --c-aqua-deep: #06343f;
+  --c-teal-deep: #0c3b33;
 
   /* --- type --- */
-  --font-pixel: "Silkscreen", monospace; /* PLACEHOLDER pixel font; headings + UI accents only */
-  --font-body: system-ui, "Segoe UI", sans-serif; /* body copy stays highly legible */
+  --font-pixel: "Silkscreen", monospace;        /* headings + UI accents only */
+  --font-body: "Geist", system-ui, sans-serif;  /* body copy */
+  --font-mono: "Geist Mono", monospace;         /* meta: year·role, durations, footer */
   --text-sm: 0.875rem;
   --text-base: 1.0625rem;
   --text-lg: 1.25rem;
@@ -48,7 +53,7 @@
   --space-6: 4rem;
 
   /* --- hard-edged styling --- */
-  --border-px: 3px;       /* chunky borders */
+  --border-px: 2px;       /* the design uses 2px borders throughout */
   --shadow-step: 6px;     /* stepped (offset, unblurred) shadow */
   --focus-ring: 3px solid var(--c-accent);
 }
