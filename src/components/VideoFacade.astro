@@ -4,9 +4,10 @@ interface Props {
   id: string;
   poster: string;
   title: string;
+  category?: string;
+  duration?: string;
 }
-
-const { provider, id, poster, title } = Astro.props;
+const { provider, id, poster, title, category, duration } = Astro.props;
 const embedUrl =
   provider === "youtube"
     ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`
@@ -14,9 +15,11 @@ const embedUrl =
 ---
 
 <div class="facade" data-embed-url={embedUrl} data-video-title={title}>
-  <button class="facade__play" type="button" aria-label={`Play video: ${title}`}>
+  <button class="facade__play-area" type="button" aria-label={`Play video: ${title}`}>
     <img src={poster} alt="" loading="lazy" width="640" height="360" />
-    <span class="facade__icon" aria-hidden="true">&#9654;</span>
+    {category && <span class="facade__cat" aria-hidden="true">{category}</span>}
+    <span class="facade__play" aria-hidden="true"><i></i></span>
+    {duration && <span class="facade__dur" aria-hidden="true">{duration}</span>}
   </button>
 </div>
 
@@ -36,47 +39,20 @@ const embedUrl =
 </script>
 
 <style>
-  .facade {
-    aspect-ratio: 16 / 9;
-    border: var(--border-px) solid var(--c-bg-deep);
+  .facade { aspect-ratio: 16/9; border: var(--border-px) solid var(--c-grape); }
+  .facade__play-area {
+    position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0;
+    background: var(--c-s1);
+    background-image: repeating-linear-gradient(135deg, #1a1336 0 10px, #120c27 10px 20px);
+    cursor: pointer; overflow: hidden;
   }
-
-  .facade__play {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    border: 0;
-    background: var(--c-bg-deep);
-    cursor: pointer;
-  }
-
-  .facade__play img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    image-rendering: pixelated;
-  }
-
-  .facade__icon {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    font-size: 3rem;
-    color: var(--c-accent);
-    text-shadow: var(--shadow-step) var(--shadow-step) 0 var(--c-bg-deep);
-  }
-
-  .facade__play:hover .facade__icon {
-    color: var(--c-accent-2);
-  }
-
-  .facade :global(.facade__iframe) {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block;
-  }
+  .facade__play-area img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+  .facade__play-area::after { content:""; position:absolute; inset:0; pointer-events:none; background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(0,0,0,0.26) 2px 3px); }
+  .facade__play-area::before { content:""; position:absolute; inset:0; pointer-events:none; background: radial-gradient(80% 70% at 50% 45%, transparent 40%, rgba(0,0,0,0.45)); }
+  .facade__play { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:2; width:64px; height:64px; display:grid; place-items:center; background:var(--c-s2); border:2px solid var(--c-accent); box-shadow:4px 4px 0 var(--c-drop), 0 0 24px rgba(26,200,237,0.40); transition: transform .12s steps(2); }
+  .facade__play-area:hover .facade__play { transform: translate(-50%,-50%) scale(1.06); }
+  .facade__play i { width:0; height:0; border-left:18px solid var(--c-accent); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px; }
+  .facade__cat { position:absolute; top:12px; left:12px; z-index:3; font-family:var(--font-pixel); font-size:9px; letter-spacing:1px; color:var(--c-accent-2); text-transform:uppercase; background:rgba(11,9,22,0.85); border:2px solid var(--c-accent-2); padding:5px 8px; }
+  .facade__dur { position:absolute; bottom:12px; right:12px; z-index:3; font-family:var(--font-mono); font-size:12px; color:var(--c-ink); background:rgba(11,9,22,0.85); border:1px solid var(--c-line); padding:3px 7px; }
+  .facade :global(.facade__iframe) { width:100%; height:100%; border:0; display:block; }
 </style>
