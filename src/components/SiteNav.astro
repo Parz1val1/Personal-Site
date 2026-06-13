@@ -1,0 +1,65 @@
+---
+const links = [
+  { label: "Work", href: "#work" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
+];
+---
+
+<nav class="nav" aria-label="Primary">
+  <a class="nav__mark" href="#main"><span class="nav__dot" aria-hidden="true"></span>AFTER&nbsp;HOURS</a>
+
+  <button class="nav__burger" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">
+    <span aria-hidden="true"></span><span aria-hidden="true"></span>
+  </button>
+
+  <div class="nav__menu" id="nav-menu">
+    <ul class="nav__links" role="list">
+      {links.map((l) => <li><a class="nav__link" href={l.href}>{l.label}</a></li>)}
+    </ul>
+    <a class="nav__try" href="/room" data-room-link>
+      <span class="crt" aria-hidden="true"></span>
+      <span>Try the room<br /><small>best on desktop</small></span>
+    </a>
+  </div>
+</nav>
+
+<script>
+  const nav = document.querySelector<HTMLElement>(".nav");
+  const burger = nav?.querySelector<HTMLButtonElement>(".nav__burger");
+  // PE: the menu only collapses behind the burger once JS marks the nav enhanced,
+  // so with JS disabled the links render inline — never a dead hamburger.
+  nav?.classList.add("nav--enhanced");
+  burger?.addEventListener("click", () => {
+    const open = burger.getAttribute("aria-expanded") === "true";
+    burger.setAttribute("aria-expanded", String(!open));
+    nav?.classList.toggle("nav--open", !open);
+  });
+</script>
+
+<style>
+  .nav { display: flex; align-items: center; gap: 28px; height: 76px; border-bottom: var(--border-px) solid var(--c-line); position: relative; }
+  .nav__mark { font-family: var(--font-pixel); font-size: 16px; letter-spacing: 0.5px; color: var(--c-heading); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+  .nav__dot { width: 9px; height: 9px; background: var(--c-accent); box-shadow: 0 0 10px rgba(26,200,237,0.7); }
+  .nav__menu { display: contents; }
+  .nav__links { display: flex; align-items: center; gap: 26px; margin: 0 0 0 8px; padding: 0; list-style: none; }
+  .nav__link { font-family: var(--font-pixel); font-size: 10px; letter-spacing: 1px; color: var(--c-muted); text-decoration: none; text-transform: uppercase; padding: 6px 2px; min-height: 44px; display: inline-flex; align-items: center; }
+  .nav__link:hover { color: var(--c-accent); }
+  .nav__try { margin-left: auto; display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-pixel); font-size: 10px; letter-spacing: 0.5px; color: var(--c-accent); text-decoration: none; text-transform: uppercase; padding: 9px 13px; background: var(--c-s2); border: var(--border-px) solid var(--c-accent); box-shadow: 3px 3px 0 var(--c-aqua-deep); }
+  .nav__try small { color: var(--c-faint); font-size: 9px; }
+  .nav__burger { display: none; width: 44px; height: 44px; border: var(--border-px) solid var(--c-line); background: var(--c-s2); cursor: pointer; flex-direction: column; gap: 5px; align-items: center; justify-content: center; margin-left: auto; }
+  .nav__burger span { display: block; width: 16px; height: 2px; background: var(--c-accent); }
+
+  /* hover-capable devices get the room pill; touch defaults to standalone */
+  @media (hover: none), (pointer: coarse) { .nav__try { display: none; } }
+
+  /* mobile collapse only applies once JS has enhanced the nav (no dead hamburger) */
+  @media (max-width: 760px) {
+    .nav--enhanced .nav__burger { display: flex; }
+    .nav--enhanced .nav__menu { position: absolute; top: 76px; left: 0; right: 0; z-index: 20; flex-direction: column; display: none; background: var(--c-s1); border: var(--border-px) solid var(--c-line); }
+    .nav--enhanced.nav--open .nav__menu { display: flex; }
+    .nav__links { flex-direction: column; align-items: stretch; gap: 0; margin: 0; }
+    .nav__link { padding: 14px 18px; border-bottom: var(--border-px) solid var(--c-line); }
+    .nav__try { margin: 12px 18px 16px; }
+  }
+</style>

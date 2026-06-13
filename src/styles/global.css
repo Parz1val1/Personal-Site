@@ -72,3 +72,10 @@ a { color: var(--c-accent); }
     transition-duration: 0.01ms !important;
   }
 }
+
+.nav-wrap { max-width: 1200px; margin: 0 auto; padding: 0 56px; }
+@media (max-width: 760px) { .nav-wrap { padding: 0 20px; } }
+
+/* shared CRT-screen glyph for "try the room" affordances */
+.crt { width: 16px; height: 12px; border: 2px solid var(--c-accent); position: relative; flex: 0 0 auto; }
+.crt::after { content:""; position:absolute; left:50%; bottom:-5px; transform:translateX(-50%); width:8px; height:2px; background: var(--c-accent); }
