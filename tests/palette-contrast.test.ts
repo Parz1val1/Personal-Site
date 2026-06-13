@@ -26,6 +26,7 @@ const AA_NORMAL: Array<[fg: string, bg: string]> = [
   ["--c-accent", "--c-bg"], // aqua links on the night
   ["--c-accent", "--c-s2"], // aqua links on panels
   ["--c-btn-ink", "--c-accent"], // dark button label on aqua
+  ["--c-btn-ink", "--c-accent-2"], // dark button label on teal (.btn--teal / hover)
 ];
 
 const AA_LARGE: Array<[fg: string, bg: string]> = [

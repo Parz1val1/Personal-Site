@@ -31,8 +31,8 @@
 
   /* --- stepped shadow inks --- */
   --c-drop: #000000;
-  --c-aqua-deep: #06343f;
-  --c-teal-deep: #0c3b33;
+  --c-aqua-deep: #06343f;  /* stepped shadow beneath aqua buttons */
+  --c-teal-deep: #0c3b33;  /* stepped shadow beneath teal buttons */
 
   /* --- type --- */
   --font-pixel: "Silkscreen", monospace;        /* headings + UI accents only */
