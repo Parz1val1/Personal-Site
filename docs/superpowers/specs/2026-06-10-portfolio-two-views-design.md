@@ -1,8 +1,8 @@
 # Personal Portfolio — Two-View Design Spec
 
-**Date:** 2026-06-10
-**Status:** Approved design, pre-implementation
-**Repo:** Personal-Site (greenfield)
+**Date:** 2026-06-10 (amended 2026-06-13: §16 After Hours standalone design; §4/§5 palette + content-model updates)
+**Status:** Plan 1 (M0–M1 standalone baseline) shipped. Standalone visual redesign (§16) planned next; room (M2+) pending.
+**Repo:** Personal-Site
 
 ## 1. Overview
 
@@ -42,8 +42,8 @@ The room island receives content + manifest as build-time props serialized by th
 Astro content collections, schemas in `src/content.config.ts` (Zod). Drift between views is a build error.
 
 - **`projects`** — one JSON entry per project:
-  `slug`, `title`, `blurb` (short; room panel copy), `description` (full; standalone), `tags`, `video?: { provider: "youtube" | "vimeo", id: string, poster: string }`, `links?: { label, url }[]`, `order`.
-  Posters are **required** when a video is present and are always self-hosted images — never hotlinked provider thumbnails — so no third-party request happens before the visitor clicks (§9, §11).
+  `slug`, `title`, `blurb` (short; room panel copy + standalone card), `description` (full; standalone modal), `category` (e.g. "SHOWREEL", "MOBILE APP" — the card/poster chip), `year` (string), `role` (e.g. "Direction · Edit"), `duration?` (clip length, e.g. "1:24"), `featured?` (boolean; at most one — the span-2 hero card), `tags`, `video?: { provider: "youtube" | "vimeo", id: string, poster: string }`, `links?: { label, url }[]`, `order`.
+  Posters are **required** when a video is present and are always self-hosted images — never hotlinked provider thumbnails — so no third-party request happens before the visitor clicks (§9, §11). `category`/`year`/`role`/`duration`/`featured` were added by the After Hours design handoff (§16); the room reads only `title`/`blurb`/`video`, so these fields are standalone-only and optional to the room.
 - **`flavor`** — room-only personality copy (mug, cat, plant, record player, headphones, window…): `id`, `text`. Lives in content land so *all prose* is in one place; never in the manifest, never in art.
 - **`site`** — singleton: `name`, `tagline`, `bio`, `email`, `socials[]`, `ogDescription`.
 
@@ -69,10 +69,11 @@ Default: every object except the hidden drawer has `countsTowardCompletion: true
 
 - `src/styles/tokens.css` is **canonical**: locked palette, type scale, spacing scale, hard-edged border/stepped-shadow styles, `--font-pixel`, `--font-body`. Both views import it; the island styles against the same custom properties. No smooth gradients anywhere.
 - `scripts/export-palette.mjs` exports the token palette to `.gpl`/`.hex` swatch files for art tools (Aseprite etc.). Palette is defined once; the art tool consumes a generated artifact.
-- **Fonts:** `--font-pixel` for headings/UI accents (placeholder: a free bitmap-style webfont, e.g. Silkscreen, swappable at the token level); `--font-body` for body copy (legible face at comfortable sizes — placeholder: system font stack). No paragraphs in the pixel font.
-- **LOCKED palette (user-supplied 2026-06-11):** five core colors — dusty grape `#564592` (page background), wisteria `#b79ced` (floating panels/cards), black `#000000` (general text), sky aqua `#1ac8ed` (large pixel headings + button faces), ocean mist `#2ebfa5` (decoration, hover grounds, large accents) — plus derived AA-support shades: deep grape `#2a2147` (shadows/borders/secondary panel text), pale lavender `#ece4fb` (text directly on grape), light ocean mist `#7ee8d2` (links on grape).
-- **Palette ground rules** (enforced by the palette-contrast test): general text is black and lives on wisteria panels (8.99:1); text directly on grape uses pale lavender (6.41:1); sky aqua carries only large pixel headings on grape (3.96:1, AA-large) and button faces with black text (10.53:1) — never body-size text on grape, never any text on wisteria (1.17:1); links on grape use light ocean mist (5.39:1), links on panels render black with ocean-mist underline decoration (true mist is unreadable on both grounds at body size: 3.42 / 1.01).
-- **Contrast rule:** the palette test enforces two tiers — 4.5:1 for body-text pairs, 3:1 for pairs the CSS guarantees render only at large size. Any new text/ground combination must be added to the appropriate tier. The room's art palette (Plan 2) may extend the locked set; the same rules apply to any text it carries.
+- **Fonts:** `--font-pixel` = **Silkscreen** (bitmap; headings + UI accents only); `--font-body` = **Geist** (legible body); `--font-mono` = **Geist Mono** (meta/captions: durations, role, footer). All three via `@fontsource` self-hosted packages — no Google Fonts CDN (preserves the no-third-party-request rule). No paragraphs in the pixel font.
+- **LOCKED palette — five core hexes, "After Hours" night mapping (design handoff 2026-06-12, §16; supersedes the 2026-06-11 grape-background reading):** black `#000000` (the night — page background), dusty grape `#564592` (raised *structure*: card borders, chips, active rings, window title bars), sky aqua `#1ac8ed` (primary accent — links, interactive, focus, play buttons), ocean mist `#2ebfa5` (secondary accent — category chips, tertiary), wisteria `#b79ced` (headings & large text on dark).
+- **Derived grape-tinted elevation + text shades** (low-chroma, all AA-checked): `--s1 #0b0916` (deep section band), `--s2 #15102a` (card/panel fill — the home of body text), `--s3 #221a40` (raised/hover within a card), `--line #362c5e` (hairline divider), `--ink #ece9f7` (near-white lavender body — 15.4:1 on s2), `--muted #aba0ce` (secondary/meta — 7.6:1 on s2), `--faint #7d72a6` (tertiary/captions — **4.24:1 on s2, below AA-normal; must be lightened to ≥4.5:1 for any body-size use, or restricted to large/decorative meta** — resolve in the plan), `--aqua-deep #06343f` (button stepped-shadow ink).
+- **Why this mapping wins:** body text on the dark elevation surfaces clears AA with huge headroom (15–17:1) where the earlier black-on-grape reading failed (2.66:1) and forced wisteria panels. Full grape `#564592` is reserved for chrome/borders/chips; card *fills* are the darker `--s2` framed in true grape, so near-white body text clears AA on every surface.
+- **Contrast rule:** the palette-contrast test enforces two tiers — 4.5:1 for body-size text pairs, 3:1 for pairs the CSS guarantees render only at large size (≥24px regular / ≥18.66px bold). Every text/ground combination must be listed in the appropriate tier; `--faint` must pass whichever tier it is used at. The room's art palette (Plan 2) may extend the locked set; the same rules apply to any text it carries.
 
 ## 6. Room manifest
 
@@ -229,7 +230,30 @@ Audio, CMS, blog, analytics, i18n, mobile/touch support for the room, contact fo
 
 ## 15. Pending inputs (don't block scaffolding)
 
-1. Design-pass reference image → asset-spec and canvas-size confirmation. (Palette: LOCKED 2026-06-11, see §5 — room art may extend it.)
-2. Final pixel font choice (placeholder webfont until then).
+1. Design-pass reference image → room asset-spec and canvas-size confirmation. (Standalone visual design: LANDED 2026-06-12, see §16. Palette: LOCKED, see §5 — room art may extend it.)
+2. Pixel font: Silkscreen confirmed (§5). Body: Geist; mono: Geist Mono.
 3. Real project copy + video IDs (placeholder entries until then).
-4. Hand-authored art (placeholders until M6).
+4. Hand-authored art — the room sprites/scenes and the standalone's full-bleed hero "pixel scene" plate (placeholders until M6).
+
+## 16. Standalone visual design — "After Hours" (design handoff 2026-06-12)
+
+A fully-resolved visual design for the standalone view (`/`), produced in Claude Design and handed off as an HTML/CSS/JS prototype. **We recreate the visual output in our Astro + tokens idiom — we do not port the prototype's React-over-CDN structure.** The handoff bundle (canvas HTML, `ph-atoms.jsx`, `ph-views.jsx`, both chat transcripts, and the separate `pixelroom.js` room renderer) is kept under `.design-tmp/` (gitignored) as build reference; the durable reference is this section.
+
+Mood: "after hours", neon-at-night, intensity ~65 — neon glow on interactive elements, restrained body. Mobile-first; tap targets ≥ 44px.
+
+**Type system:** Silkscreen for the wordmark, section titles, card titles, nav, chips, buttons; Geist for all body/blurb copy; Geist Mono for meta (year · role, durations, footer, captions).
+
+**Layout & components to build:**
+
+1. **Nav** (in the Base layout; §9 already specs the hamburger): Silkscreen wordmark with a glowing aqua dot, links (Work / About / Contact) jumping to section anchors, and the "Try the room — best on desktop" pill (CRT glyph) shown on hover-capable devices. Mobile collapses links to the hamburger.
+2. **Hero — desktop:** a **full-bleed "pixel scene" banner** directly under the nav (the room preview), framed in grape with stepped shadow, carrying scattered `+` hotspot markers, a "THE ROOM" corner mark, and an "explore the interactive room" hint pill. The room art is a **drop-in placeholder slot** now (dashed box) — real art is the same authored-room asset as Plan 2, so this overlaps the room milestone. Below it, an **intro band**: eyebrow ("Portfolio · after dark"), the `AFTER HOURS`-scale wordmark (here the site name), lede/bio, mono signature line, and CTA row (primary + ghost). **Hero — mobile:** no scene banner; stacked eyebrow → wordmark → lede → CTAs, with a small art slot.
+3. **Work section** ("01 · SELECTED WORK"): a **featured span-2 card** (row layout on desktop: poster left, body right; stacks on mobile) followed by a 2-up grid of standard cards.
+4. **Project card:** dark `--s2` fill, grape border, stepped drop shadow. Contains the **video poster treatment** (16:9, dithered diagonal-stripe fill, scanline + vignette overlays, chunky aqua play button, category chip top-left, duration bottom-right) — this wraps the existing click-to-load `VideoFacade` (§9). Body: Silkscreen title, Geist blurb, mono `year · role` meta, tag chips. Hover: lift + aqua ring + the two purple effects below.
+5. **Expanded view — retro `.exe` modal / mobile bottom sheet:** a focus-trapped window (title-bar with dots + `title.exe` + close) showing the playing video beside detail (category, title, blurb, `Year/Role/Stack` definition list, action buttons). On mobile it's a bottom sheet with a grab handle. This is the standalone's project-detail interaction (the room has its own discovery panel). New interaction layer: `Esc`/close/scrim-click dismiss, background inert, focus restored to the trigger.
+6. **Contact / footer:** "GET IN TOUCH / LET'S MAKE SOMETHING LATE" panel (grape-framed `--s2`), sub-copy, CTA row (mailto + CV), then a footer with the Silkscreen mark and mono social links. Reuses the §2 obfuscated-mailto + copy-email behavior.
+7. **Buttons & links:** primary (aqua fill, `--aqua-deep` stepped shadow, nudge-on-hover / press-in-on-active), ghost (aqua inset ring), teal variant; text links in aqua with a soft underline. Focus: 3px aqua outline + offset + glow, never hidden.
+8. **Decorative pixel accents (CSS, not authored assets):** small box-shadow "twinkle" stars (aqua/teal/lavender), and the two purple motion effects on card hover — a **steady lavender/grape glow** spilling onto the black, and a **one-shot ripple pulse** expanding to the screen edges on first hover. Both gated behind `prefers-reduced-motion`. Dashed `--line` boxes mark where authored pixel sprites drop in later.
+
+**Carried-over guarantees:** all copy/projects remain content-collection-driven placeholders; the video poster wraps the no-third-party-request facade; AA contrast stays test-enforced (§5); semantic landmarks, keyboard operability, and reduced-motion from §11 hold — the modal and the hover effects must honor them.
+
+**Scope note:** the desktop hero scene-banner is a preview of the interactive room and shares its authored art, so it is the one piece of this redesign that genuinely overlaps Plan 2. Everything else is standalone-only and builds on the existing `/` foundation.

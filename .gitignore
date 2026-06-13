@@ -5,3 +5,4 @@ dist/
 .env.*
 lighthouse-report.json
 .claude/
+.design-tmp/
