@@ -1,9 +1,12 @@
 ---
+// @ts-expect-error - @fontsource/silkscreen has no type declarations
+import "@fontsource/silkscreen";
+// @ts-expect-error - @fontsource/geist-sans has no type declarations
+import "@fontsource/geist-sans";
+// @ts-expect-error - @fontsource/geist-mono has no type declarations
+import "@fontsource/geist-mono";
 import "../styles/tokens.css";
 import "../styles/global.css";
-
-// @ts-expect-error - @fontsource/silkscreen has no TypeScript declarations
-import "@fontsource/silkscreen";
 
 interface Props {
   title: string;

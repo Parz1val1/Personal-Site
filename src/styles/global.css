@@ -1,115 +1,70 @@
 *,
 *::before,
-*::after {
-  box-sizing: border-box;
-}
+*::after { box-sizing: border-box; }
 
 body {
   margin: 0;
   background: var(--c-bg);
-  /* Default text color is for the grape background; panels switch to black. */
-  color: var(--c-text-dim);
+  /* faint top twilight so the night has depth (spec §16) */
+  background-image: radial-gradient(130% 70% at 50% -8%, rgba(86,69,146,0.30), rgba(86,69,146,0) 58%);
+  color: var(--c-ink);
   font-family: var(--font-body);
   font-size: var(--text-base);
-  line-height: 1.65;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
   font-family: var(--font-pixel);
   line-height: 1.25;
-  color: var(--c-accent);
+  color: var(--c-heading);
 }
 
-img {
-  display: block;
-  max-width: 100%;
-}
+img { display: block; max-width: 100%; }
 
-a {
-  color: var(--c-link);
-}
+a { color: var(--c-accent); }
 
-:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: 2px;
-}
+:focus-visible { outline: var(--focus-ring); outline-offset: 3px; }
 
 .skip-link {
-  position: absolute;
-  left: -999px;
-  top: 0;
-  z-index: 100;
-  background: var(--c-accent);
-  color: var(--c-text);
-  padding: var(--space-2) var(--space-3);
-  font-family: var(--font-pixel);
+  position: absolute; left: -999px; top: 0; z-index: 100;
+  background: var(--c-accent); color: var(--c-btn-ink);
+  padding: var(--space-2) var(--space-3); font-family: var(--font-pixel);
 }
+.skip-link:focus { left: 0; }
 
-.skip-link:focus {
-  left: 0;
-}
-
-/* Hard-edged building blocks shared across the standalone view.
-   Panels are the home of general (black) text; these rules re-ground
-   text, headings, links, and focus rings for the light wisteria surface. */
+/* Hard-edged building blocks. Panels are dark s2 framed in true grape;
+   body text on them is near-white and clears AA (spec §5). */
 .pixel-box {
-  background: var(--c-surface);
-  border: var(--border-px) solid var(--c-border);
-  box-shadow: var(--shadow-step) var(--shadow-step) 0 var(--c-bg-deep);
-  color: var(--c-text);
-}
-
-.pixel-box h1,
-.pixel-box h2,
-.pixel-box h3 {
-  color: var(--c-text);
-}
-
-.pixel-box a:not(.btn) {
-  color: var(--c-text);
-  text-decoration-color: var(--c-accent-2);
-  text-decoration-thickness: 2px;
-}
-
-.pixel-box a:not(.btn):hover {
-  background: var(--c-accent-2);
-}
-
-.pixel-box :focus-visible {
-  outline-color: var(--c-bg-deep);
+  background: var(--c-s2);
+  border: var(--border-px) solid var(--c-grape);
+  box-shadow: var(--shadow-step) var(--shadow-step) 0 var(--c-drop);
+  color: var(--c-ink);
 }
 
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: var(--space-2) var(--space-4);
-  background: var(--c-accent);
-  color: var(--c-text);
-  border: var(--border-px) solid var(--c-bg-deep);
-  box-shadow: var(--shadow-step) var(--shadow-step) 0 var(--c-bg-deep);
-  font-family: var(--font-pixel);
-  font-size: var(--text-base);
-  text-decoration: none;
-  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 44px; padding: 15px 20px;
+  font-family: var(--font-pixel); font-size: var(--text-sm); letter-spacing: 0.5px;
+  text-transform: uppercase; text-decoration: none; cursor: pointer;
+  color: var(--c-btn-ink); background: var(--c-accent); border: 0;
+  box-shadow: 4px 4px 0 var(--c-aqua-deep);
+  transition: transform .1s steps(2), box-shadow .1s;
 }
+.btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--c-aqua-deep), 0 0 26px rgba(26,200,237,0.45); }
+.btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--c-aqua-deep); }
+.btn--ghost { background: transparent; color: var(--c-accent); box-shadow: inset 0 0 0 2px var(--c-accent); }
+.btn--ghost:hover { background: rgba(26,200,237,0.10); box-shadow: inset 0 0 0 2px var(--c-accent), 0 0 22px rgba(26,200,237,0.25); }
+.btn--teal { background: var(--c-accent-2); color: var(--c-btn-ink); box-shadow: 4px 4px 0 var(--c-teal-deep); }
 
-.btn:hover {
-  background: var(--c-accent-2);
+.link {
+  color: var(--c-accent); text-decoration: none; font-weight: 500;
+  border-bottom: 2px solid rgba(26,200,237,0.4); padding-bottom: 1px;
 }
-
-.btn:active {
-  translate: var(--shadow-step) var(--shadow-step);
-  box-shadow: none;
-}
+.link:hover { border-bottom-color: var(--c-accent); }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
