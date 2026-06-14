@@ -62,14 +62,21 @@ const { project, featured = false } = Astro.props;
     .card--featured :global(.facade) { border-right: none; border-bottom: var(--border-px) solid var(--c-grape); }
   }
 
-  /* hover: lift + steady aqua ring, with the surrounding glow gently breathing.
-     Glow geometry is constant; only the alpha fades — from ~20% of peak (a soft
-     floor, never fully gone) up to full and back. Drop shadow + aqua ring stay
-     constant so the panel edge doesn't shimmer. Synced to the play-button bob at 1.5s. */
-  .card:hover { transform: translate(-3px,-3px); animation: card-breathe 1.5s ease-in-out infinite; }
-  @keyframes card-breathe {
-    0%, 100% { box-shadow: 9px 9px 0 var(--c-drop), 0 0 0 2px var(--c-accent), 0 0 26px rgba(26,200,237,0.08), 0 0 72px 18px rgba(135,99,214,0.11), 0 0 120px 32px rgba(86,69,146,0.10); }
-    50% { box-shadow: 9px 9px 0 var(--c-drop), 0 0 0 2px var(--c-accent), 0 0 26px rgba(26,200,237,0.40), 0 0 72px 18px rgba(135,99,214,0.55), 0 0 120px 32px rgba(86,69,146,0.48); }
+  /* hover: lift + steady aqua ring + a bright aqua/violet glow lobe that ORBITS
+     the panel on a circular path (offset rotates N→E→S→W) over a faint steady
+     ambient, so the far side never goes fully dark. Any fixed point on the edge
+     sees intensity rise and fall as the lobe passes = a sine wave sweeping around.
+     Drop shadow + aqua ring stay constant. 1.5s linear, synced to the play bob. */
+  .card:hover { transform: translate(-3px,-3px); animation: card-glow-orbit 1.5s linear infinite; }
+  @keyframes card-glow-orbit {
+    0%,100% { box-shadow: 9px 9px 0 var(--c-drop), 0 0 0 2px var(--c-accent), 0 0 55px 6px rgba(86,69,146,0.16), 0 -36px 46px 10px rgba(135,99,214,0.52), 0 -36px 26px 2px rgba(26,200,237,0.40); }
+    12.5%   { box-shadow: 9px 9px 0 var(--c-drop), 0 0 0 2px var(--c-accent), 0 0 55px 6px rgba(86,69,146,0.16), 25px -25px 46px 10px rgba(135,99,214,0.52), 25px -25px 26px 2px rgba(26,200,237,0.40); }
+    25%     { box-shadow: 9px 9px 0 var(--c-drop), 0 0 0 2px var(--c-accent), 0 0 55px 6px rgba(86,69,146,0.16), 36px 0 46px 10px rgba(135,99,214,0.52), 36px 0 26px 2px rgba(26,200,237,0.40); }
+    37.5%   { box-shadow: 9px 9px 0 var(--c-drop), 0 0 0 2px var(--c-accent), 0 0 55px 6px rgba(86,69,146,0.16), 25px 25px 46px 10px rgba(135,99,214,0.52), 25px 25px 26px 2px rgba(26,200,237,0.40); }
+    50%     { box-shadow: 9px 9px 0 var(--c-drop), 0 0 0 2px var(--c-accent), 0 0 55px 6px rgba(86,69,146,0.16), 0 36px 46px 10px rgba(135,99,214,0.52), 0 36px 26px 2px rgba(26,200,237,0.40); }
+    62.5%   { box-shadow: 9px 9px 0 var(--c-drop), 0 0 0 2px var(--c-accent), 0 0 55px 6px rgba(86,69,146,0.16), -25px 25px 46px 10px rgba(135,99,214,0.52), -25px 25px 26px 2px rgba(26,200,237,0.40); }
+    75%     { box-shadow: 9px 9px 0 var(--c-drop), 0 0 0 2px var(--c-accent), 0 0 55px 6px rgba(86,69,146,0.16), -36px 0 46px 10px rgba(135,99,214,0.52), -36px 0 26px 2px rgba(26,200,237,0.40); }
+    87.5%   { box-shadow: 9px 9px 0 var(--c-drop), 0 0 0 2px var(--c-accent), 0 0 55px 6px rgba(86,69,146,0.16), -25px -25px 46px 10px rgba(135,99,214,0.52), -25px -25px 26px 2px rgba(26,200,237,0.40); }
   }
   @media (prefers-reduced-motion: reduce) {
     .card:hover { animation: none; box-shadow: 9px 9px 0 var(--c-drop), 0 0 0 2px var(--c-accent), 0 0 26px rgba(26,200,237,0.24), 0 0 72px 18px rgba(135,99,214,0.33), 0 0 120px 32px rgba(86,69,146,0.29); }
