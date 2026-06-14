@@ -16,6 +16,8 @@ const rest = projects.filter((p) => p !== featured);
 
 <Base title={`${name} — Portfolio`} description={ogDescription}>
   <header class="hero">
+    <span class="star" style="left:6%;top:120px" aria-hidden="true"></span>
+    <span class="star star--teal" style="left:92%;top:90px" aria-hidden="true"></span>
     <div class="scene">
       <span class="scene__mark" aria-hidden="true"><span class="scene__dot"></span>THE ROOM</span>
       <span class="scene__slot" aria-hidden="true">pixel scene — full bleed<br /><small>authored room art loads here</small></span>
@@ -24,7 +26,7 @@ const rest = projects.filter((p) => p !== featured);
       <span class="hotspot" style="left:68%;top:30%" aria-hidden="true"><span>+</span></span>
       <span class="hotspot" style="left:78%;top:62%" aria-hidden="true"><span>+</span></span>
       <span class="hotspot" style="left:34%;top:70%" aria-hidden="true"><span>+</span></span>
-      <a class="scene__hint" href="/room" data-room-link><span class="crt" aria-hidden="true"></span><span>Explore the interactive room<small>best on desktop</small></span></a>
+      <a class="scene__hint" href="/room" data-room-link><span class="crt" aria-hidden="true"></span><span>Explore the interactive room <small>best on desktop</small></span></a>
     </div>
     <div class="intro" id="about">
       <div class="intro__left">
@@ -58,7 +60,8 @@ const rest = projects.filter((p) => p !== featured);
   </main>
 
   <footer class="footer">
-    <p>&copy; {new Date().getFullYear()} {name}</p>
+    <span class="footer__mark">© {new Date().getFullYear()} {name}</span>
+    <div class="footer__soc">{site.data.socials.map((s) => <a class="footer__link" href={s.url}>{s.label}</a>)}</div>
   </footer>
   <ProjectModal />
 </Base>
@@ -122,29 +125,19 @@ const rest = projects.filter((p) => p !== featured);
     .lede { font-size: 16px; }
   }
 
-  main {
-    max-width: 56rem;
-    margin-inline: auto;
-    padding: 0 var(--space-4) var(--space-6);
-  }
+  main { max-width: 1200px; margin: 0 auto; padding: 0 56px 64px; }
+  @media (max-width: 760px) { main { padding: 0 20px 44px; } }
 
-  .section {
-    margin-block: var(--space-5);
-  }
+  .section { margin-block: 18px 70px; }
+  @media (max-width: 760px) { .section { margin-block: 8px 44px; } }
 
-  .footer {
-    border-top: var(--border-px) solid var(--c-border);
-    color: var(--c-text-dim);
-    font-size: var(--text-sm);
-    padding: var(--space-4);
-    text-align: center;
-  }
+  .footer { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 30px 0 46px; border-top: var(--border-px) solid var(--c-line); margin-top: 56px; flex-wrap: wrap; }
+  .footer__mark { font-family: var(--font-pixel); font-size: 11px; color: var(--c-muted); letter-spacing: 1px; }
+  .footer__soc { display: flex; gap: 18px; }
+  .footer__link { font-family: var(--font-mono); font-size: 13px; color: var(--c-faint); text-decoration: none; }
+  .footer__link:hover { color: var(--c-accent); }
 
-  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 38px; }
-  .sec-title { font-family: var(--font-pixel); font-size: 24px; color: var(--c-heading); margin: 0; display: inline-flex; align-items: center; gap: 14px; }
-  .sec-idx { font-size: 11px; color: var(--c-accent-2); letter-spacing: 1px; }
-  .sec-meta { font-family: var(--font-mono); font-size: 12px; color: var(--c-faint); letter-spacing: 0.5px; }
   .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
   .work-grid__featured { grid-column: 1 / -1; }
-  @media (max-width: 760px) { .work-grid { grid-template-columns: 1fr; gap: 22px; } .sec-title { font-size: 17px; } }
+  @media (max-width: 760px) { .work-grid { grid-template-columns: 1fr; gap: 22px; } }
 </style>

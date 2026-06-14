@@ -16,22 +16,16 @@ const [user = "", domain = ""] = email.split("@");
 ---
 
 <section class="section" id="contact" aria-labelledby="contact-heading">
-  <h2 id="contact-heading">Get in touch</h2>
+  <div class="sec-head"><h2 class="sec-title" id="contact-heading"><span class="sec-idx">02</span>GET IN TOUCH</h2></div>
   <div class="pixel-box contact-panel">
+    <h3 class="contact__title">LET'S MAKE<br />SOMETHING LATE</h3>
+    <p class="contact__sub">Commissions, collaborations, or just trading favourite 2&nbsp;a.m. records — the inbox is always open.</p>
     <div class="contact">
       <Fragment set:html={`<a class="btn" href="mailto:${encoded}">${encoded}</a>`} />
-      <button class="btn" type="button" aria-live="polite" data-user={user} data-domain={domain}>
-        Copy email
-      </button>
+      <button class="btn btn--ghost" type="button" aria-live="polite" data-user={user} data-domain={domain}>Copy email</button>
     </div>
     <ul class="socials" role="list">
-      {
-        socials.map((s) => (
-          <li>
-            <a href={s.url}>{s.label}</a>
-          </li>
-        ))
-      }
+      {socials.map((s) => <li><a class="link" href={s.url}>{s.label}</a></li>)}
     </ul>
   </div>
 </section>
@@ -52,31 +46,11 @@ const [user = "", domain = ""] = email.split("@");
 </script>
 
 <style>
-  .contact-panel {
-    padding: var(--space-3) var(--space-4);
-  }
-
-  .contact {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    align-items: center;
-    margin-bottom: var(--space-4);
-  }
-
-  .socials {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    margin: 0;
-    padding: 0;
-  }
-
-  .socials a {
-    font-family: var(--font-pixel);
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-  }
+  .contact-panel { padding: 48px 44px; position: relative; overflow: hidden; }
+  .contact__title { font-family: var(--font-pixel); font-size: 34px; color: var(--c-heading); margin: 0 0 16px; line-height: 1.05; }
+  .contact__sub { font-size: 17px; color: var(--c-ink); max-width: 34em; margin: 0 0 28px; }
+  .contact { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; margin-bottom: var(--space-4); }
+  .socials { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-4); margin: 0; padding: 0; }
+  .socials a { font-family: var(--font-mono); }
+  @media (max-width: 760px) { .contact-panel { padding: 32px 22px; } .contact__title { font-size: 24px; } }
 </style>
