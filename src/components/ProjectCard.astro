@@ -28,6 +28,16 @@ const { project, featured = false } = Astro.props;
     {project.tags.length > 0 && (
       <ul class="card__tags" role="list">{project.tags.map((t) => <li>{t}</li>)}</ul>
     )}
+    <button class="card__open" type="button"
+      data-open-modal
+      data-title={project.title}
+      data-category={project.category}
+      data-year={project.year}
+      data-role={project.role}
+      data-stack={project.tags.join(" · ")}
+      data-blurb={project.description}>
+      <span class="visually-hidden">Open {project.title} details</span>
+    </button>
   </div>
 </article>
 
@@ -61,4 +71,8 @@ const { project, featured = false } = Astro.props;
     100% { transform: translate(-50%,-50%) scale(34); opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) { .card:hover .card__ripple { animation: none; } }
+
+  .card__open { position: absolute; inset: 0; z-index: 2; background: none; border: 0; cursor: pointer; }
+  /* keep the video play button above the open overlay */
+  .card :global(.facade) { position: relative; z-index: 3; }
 </style>

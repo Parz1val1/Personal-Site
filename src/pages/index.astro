@@ -3,6 +3,7 @@ import { getCollection, getEntry } from "astro:content";
 import Base from "../layouts/Base.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import ContactSection from "../components/ContactSection.astro";
+import ProjectModal from "../components/ProjectModal.astro";
 
 const site = await getEntry("site", "main");
 if (!site) throw new Error("site content entry 'main' is missing");
@@ -44,7 +45,36 @@ const rest = projects.filter((p) => p !== featured);
   <footer class="footer">
     <p>&copy; {new Date().getFullYear()} {name}</p>
   </footer>
+  <ProjectModal />
 </Base>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>(".modal");
+  if (dialog) {
+    const set = (sel: string, val: string) => { const el = dialog.querySelector<HTMLElement>(sel); if (el) el.textContent = val; };
+    let lastTrigger: HTMLElement | null = null;
+    for (const btn of document.querySelectorAll<HTMLButtonElement>("[data-open-modal]")) {
+      btn.addEventListener("click", () => {
+        const d = btn.dataset;
+        set("[data-modal-exe]", `${d.title}.exe`);
+        set("[data-modal-cat]", d.category ?? "");
+        set("[data-modal-title]", d.title ?? "");
+        set("[data-modal-blurb]", d.blurb ?? "");
+        set("[data-modal-year]", d.year ?? "");
+        set("[data-modal-role]", d.role ?? "");
+        set("[data-modal-stack]", d.stack ?? "");
+        const media = dialog.querySelector<HTMLElement>("[data-modal-media]");
+        const facade = btn.closest(".card")?.querySelector(".facade");
+        if (media) { media.replaceChildren(); if (facade) media.appendChild(facade.cloneNode(true)); }
+        lastTrigger = btn;
+        dialog.showModal();
+      });
+    }
+    dialog.querySelector("[data-modal-close]")?.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
+    dialog.addEventListener("close", () => lastTrigger?.focus());
+  }
+</script>
 
 <style>
   .hero {
