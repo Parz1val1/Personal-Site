@@ -65,7 +65,13 @@ const rest = projects.filter((p) => p !== featured);
         set("[data-modal-stack]", d.stack ?? "");
         const media = dialog.querySelector<HTMLElement>("[data-modal-media]");
         const facade = btn.closest(".card")?.querySelector(".facade");
-        if (media) { media.replaceChildren(); if (facade) media.appendChild(facade.cloneNode(true)); }
+        if (media) {
+          media.replaceChildren();
+          // Only clone the poster state — never a facade whose video is already playing.
+          if (facade?.querySelector("button.facade__play-area")) {
+            media.appendChild(facade.cloneNode(true));
+          }
+        }
         lastTrigger = btn;
         dialog.showModal();
       });
