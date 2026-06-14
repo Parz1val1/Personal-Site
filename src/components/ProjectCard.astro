@@ -35,7 +35,8 @@ const { project, featured = false } = Astro.props;
       data-year={project.year}
       data-role={project.role}
       data-stack={project.tags.join(" · ")}
-      data-blurb={project.description}>
+      data-blurb={project.description}
+      data-links={JSON.stringify(project.links)}>
       <span class="visually-hidden">Open {project.title} details</span>
     </button>
   </div>

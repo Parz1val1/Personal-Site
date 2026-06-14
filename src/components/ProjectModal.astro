@@ -19,6 +19,7 @@
         <dt>Role</dt><dd data-modal-role></dd>
         <dt>Stack</dt><dd data-modal-stack></dd>
       </dl>
+      <div class="modal__actions" data-modal-actions></div>
     </div>
   </div>
 </dialog>
@@ -40,6 +41,9 @@
   .modal__meta { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; font-family: var(--font-mono); font-size: 12px; color: var(--c-muted); margin: 2px 0 0; }
   .modal__meta dt { color: var(--c-faint); text-transform: uppercase; letter-spacing: 0.5px; }
   .modal__meta dd { margin: 0; }
+
+  .modal__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
+  .modal__actions:empty { display: none; }
 
   @media (max-width: 760px) {
     .modal { width: 100%; max-width: 100%; margin: auto auto 0; border: 0; border-top: 2px solid var(--c-accent); }
