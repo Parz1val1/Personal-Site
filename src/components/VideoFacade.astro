@@ -50,7 +50,7 @@ const embedUrl =
   .facade__play-area::after { content:""; position:absolute; inset:0; pointer-events:none; background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(0,0,0,0.26) 2px 3px); }
   .facade__play-area::before { content:""; position:absolute; inset:0; pointer-events:none; background: radial-gradient(80% 70% at 50% 45%, transparent 40%, rgba(0,0,0,0.45)); }
   .facade__play { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:2; width:64px; height:64px; display:grid; place-items:center; background:var(--c-s2); border:2px solid var(--c-accent); box-shadow:4px 4px 0 var(--c-drop), 0 0 24px rgba(26,200,237,0.40); transition: transform .12s steps(2); }
-  .facade__play-area:hover .facade__play { transform: translate(-50%,-50%) scale(1.06); animation: facade-play-float 1.6s ease-in-out infinite; }
+  .facade__play-area:hover .facade__play { transform: translate(-50%,-50%) scale(1.06); animation: facade-play-float 1.5s ease-in-out infinite; }
   /* gentle game-cursor bob around centre while hovering */
   @keyframes facade-play-float {
     0%, 100% { transform: translate(-50%, -56%) scale(1.06); }
