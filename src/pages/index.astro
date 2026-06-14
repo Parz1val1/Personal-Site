@@ -16,18 +16,33 @@ const rest = projects.filter((p) => p !== featured);
 
 <Base title={`${name} — Portfolio`} description={ogDescription}>
   <header class="hero">
-    <h1>{name}</h1>
-    <p class="hero__tagline">{tagline}</p>
+    <div class="scene">
+      <span class="scene__mark" aria-hidden="true"><span class="scene__dot"></span>THE ROOM</span>
+      <span class="scene__slot" aria-hidden="true">pixel scene — full bleed<br /><small>authored room art loads here</small></span>
+      <span class="hotspot" style="left:20%;top:32%" aria-hidden="true"><span>+</span></span>
+      <span class="hotspot" style="left:46%;top:46%" aria-hidden="true"><span>+</span></span>
+      <span class="hotspot" style="left:68%;top:30%" aria-hidden="true"><span>+</span></span>
+      <span class="hotspot" style="left:78%;top:62%" aria-hidden="true"><span>+</span></span>
+      <span class="hotspot" style="left:34%;top:70%" aria-hidden="true"><span>+</span></span>
+      <a class="scene__hint" href="/room" data-room-link><span class="crt" aria-hidden="true"></span><span>Explore the interactive room<small>best on desktop</small></span></a>
+    </div>
+    <div class="intro" id="about">
+      <div class="intro__left">
+        <span class="eyebrow">Portfolio · after dark</span>
+        <h1 class="wordmark">{name}</h1>
+      </div>
+      <div class="intro__right">
+        <p class="lede">{bio}</p>
+        <p class="sig"><span class="sig__cur">&gt;</span> {tagline}</p>
+        <div class="cta-row">
+          <a class="btn" href="#work">View the work ↓</a>
+          <a class="btn btn--ghost" href="#contact">Say hello</a>
+        </div>
+      </div>
+    </div>
   </header>
 
   <main id="main">
-    <section class="section" aria-labelledby="about-heading">
-      <h2 id="about-heading">About</h2>
-      <div class="pixel-box section__panel">
-        <p>{bio}</p>
-      </div>
-    </section>
-
     <section class="section work" id="work" aria-labelledby="work-heading">
       <div class="sec-head">
         <h2 class="sec-title" id="work-heading"><span class="sec-idx">01</span>SELECTED WORK</h2>
@@ -83,21 +98,28 @@ const rest = projects.filter((p) => p !== featured);
 </script>
 
 <style>
-  .hero {
-    padding: var(--space-6) var(--space-4) var(--space-5);
-    max-width: 56rem;
-    margin-inline: auto;
-  }
-
-  .hero h1 {
-    font-size: var(--text-2xl);
-    margin: 0 0 var(--space-2);
-  }
-
-  .hero__tagline {
-    color: var(--c-text-dim);
-    font-size: var(--text-lg);
-    margin: 0;
+  .hero { padding-top: 30px; position: relative; }
+  .scene { position: relative; width: 100%; aspect-ratio: 16/7; min-height: 380px; background: var(--c-s2); background-image: radial-gradient(120% 130% at 50% 8%, rgba(86,69,146,0.34), rgba(86,69,146,0) 60%), repeating-linear-gradient(135deg, #1a1338 0 12px, #130d29 12px 24px); border: var(--border-px) solid var(--c-grape); box-shadow: 8px 8px 0 var(--c-drop), inset 0 0 0 2px rgba(86,69,146,0.25), inset 0 0 120px rgba(86,69,146,0.30); overflow: hidden; }
+  .scene__mark { position: absolute; top: 16px; left: 18px; display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-pixel); font-size: 12px; letter-spacing: 1px; color: var(--c-heading); background: rgba(11,9,22,0.7); border: 2px solid var(--c-line); padding: 7px 11px; }
+  .scene__dot { width: 9px; height: 9px; background: var(--c-accent); box-shadow: 0 0 10px rgba(26,200,237,0.7); }
+  .scene__slot { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); font-family: var(--font-mono); font-size: 12px; letter-spacing: 1px; color: var(--c-faint); text-transform: uppercase; text-align: center; line-height: 1.8; border: 2px dashed var(--c-line); padding: 16px 22px; background: rgba(11,9,22,0.6); }
+  .hotspot { position: absolute; width: 34px; height: 34px; transform: translate(-50%,-50%); display: grid; place-items: center; background: rgba(86,69,146,0.55); border: 2px solid var(--c-accent); border-radius: 50%; box-shadow: 0 0 0 4px rgba(11,9,22,0.55), 0 0 18px rgba(26,200,237,0.55); }
+  .hotspot span { font-family: var(--font-pixel); font-size: 15px; color: var(--c-accent); }
+  .scene__hint { position: absolute; right: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-pixel); font-size: 10px; letter-spacing: 0.5px; color: var(--c-accent); text-decoration: none; text-transform: uppercase; padding: 9px 13px; background: rgba(11,9,22,0.82); border: 2px solid var(--c-accent); box-shadow: 3px 3px 0 var(--c-aqua-deep); }
+  .scene__hint small { display: block; color: var(--c-faint); font-size: 9px; }
+  .intro { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: end; margin-top: 46px; }
+  .eyebrow { font-family: var(--font-pixel); font-size: 11px; letter-spacing: 3px; color: var(--c-accent); text-transform: uppercase; margin-bottom: 28px; display: inline-flex; align-items: center; gap: 12px; }
+  .eyebrow::before { content:""; width: 26px; height: 2px; background: var(--c-accent); box-shadow: 0 0 8px rgba(26,200,237,0.6); }
+  .wordmark { font-family: var(--font-pixel); font-size: 72px; line-height: 0.98; letter-spacing: -1px; color: var(--c-heading); margin: 0; text-shadow: 0 0 26px rgba(183,156,237,0.28), 5px 5px 0 rgba(86,69,146,0.45); }
+  .lede { font-size: 19px; line-height: 1.62; color: var(--c-ink); max-width: 30em; margin: 0 0 16px; text-wrap: pretty; }
+  .sig { font-family: var(--font-mono); font-size: 13px; color: var(--c-muted); margin: 0 0 34px; }
+  .sig__cur { color: var(--c-accent); }
+  .cta-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  @media (hover: none), (pointer: coarse) { .scene, .scene__hint { display: none; } }
+  @media (max-width: 760px) {
+    .intro { grid-template-columns: 1fr; gap: 24px; margin-top: 0; }
+    .wordmark { font-size: 48px; }
+    .lede { font-size: 16px; }
   }
 
   main {
@@ -108,18 +130,6 @@ const rest = projects.filter((p) => p !== featured);
 
   .section {
     margin-block: var(--space-5);
-  }
-
-  .section h2 {
-    font-size: var(--text-xl);
-  }
-
-  .section__panel {
-    padding: var(--space-3) var(--space-4);
-  }
-
-  .section__panel p {
-    margin: 0;
   }
 
   .footer {
