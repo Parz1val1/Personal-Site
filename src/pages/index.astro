@@ -102,7 +102,11 @@ const rest = projects.filter((p) => p !== featured);
             a.href = link.url;
             a.target = "_blank";
             a.rel = "noopener noreferrer";
-            a.textContent = `${link.label} ↗`;
+            a.textContent = link.label;
+            const arrow = document.createElement("span");
+            arrow.setAttribute("aria-hidden", "true");
+            arrow.textContent = " ↗";
+            a.appendChild(arrow);
             actions.appendChild(a);
           }
         }
